@@ -1,3 +1,6 @@
+from openai import OpenAI
+client = OpenAI()
+
 import streamlit as st
 import openai
 from elevenlabs import set_api_key, generate, save
@@ -50,7 +53,12 @@ if ctx.state.playing:
 
         if wav_path:
             with st.spinner("🔍 Transcription en cours..."):
-                transcript = openai.Audio.transcribe("whisper-1", wav_path)
+               with open(wav_path, "rb") as audio_file:
+    transcript = client.audio.transcriptions.create(
+        model="whisper-1",
+        file=audio_file
+    )
+
                 st.markdown(f"📝 **Vous avez dit** : {transcript['text']}")
 
                 with st.spinner("💬 Réponse de l’IA..."):

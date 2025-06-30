@@ -1,0 +1,5 @@
+streamlit
+openai
+elevenlabs==0.2.27
+streamlit-webrtc
+av

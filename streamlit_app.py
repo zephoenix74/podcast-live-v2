@@ -2,7 +2,6 @@ from openai import OpenAI
 client = OpenAI()
 
 import streamlit as st
-import openai
 from elevenlabs import set_api_key, generate, save
 import os
 from streamlit_webrtc import webrtc_streamer, AudioProcessorBase
@@ -53,20 +52,19 @@ if ctx.state.playing:
 
         if wav_path:
             with st.spinner("🔍 Transcription en cours..."):
-               with open(wav_path, "rb") as audio_file:
-    transcript = client.audio.transcriptions.create(
-        model="whisper-1",
-        file=audio_file
-    )
-
-                st.markdown(f"📝 **Vous avez dit** : {transcript['text']}")
+                with open(wav_path, "rb") as audio_file:
+                    transcript = client.audio.transcriptions.create(
+                        model="whisper-1",
+                        file=audio_file
+                    )
+                st.markdown(f"📝 **Vous avez dit** : {transcript.text}")
 
                 with st.spinner("💬 Réponse de l’IA..."):
-                    chat = openai.ChatCompletion.create(
+                    chat = client.chat.completions.create(
                         model="gpt-4o",
                         messages=[
                             {"role": "system", "content": "Tu es un expert en géopolitique, parle simplement."},
-                            {"role": "user", "content": transcript["text"]}
+                            {"role": "user", "content": transcript.text}
                         ]
                     )
                     reply = chat.choices[0].message.content

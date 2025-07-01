@@ -10,7 +10,6 @@ import av
 import tempfile
 
 # Configuration des clés API
-openai.api_key = os.getenv("OPENAI_API_KEY")
 set_api_key(os.getenv("ELEVENLABS_API_KEY"))
 
 st.set_page_config("🎧 Podcast Live IA", layout="centered")

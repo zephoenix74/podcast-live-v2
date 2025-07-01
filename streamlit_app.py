@@ -39,7 +39,9 @@ ctx = webrtc_streamer(
 )
 
 if ctx.state.playing:
+    st.audio("", format="audio/mp3")  # stoppe le podcast
     st.info("🎙️ Parlez maintenant...")
+
     if ctx.audio_processor:
         audio_data = b""
         while not ctx.audio_processor.buffer.empty():
@@ -74,5 +76,5 @@ if ctx.state.playing:
                     save(audio, "ia-response.mp3")
                     st.audio("ia-response.mp3", format="audio/mp3")
 
-st.audio("", format="audio/mp3")  # coupe l'audio actif
+
 

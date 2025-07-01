@@ -73,3 +73,6 @@ if ctx.state.playing:
                     audio = generate(text=reply, voice="Bella", model="eleven_multilingual_v1")
                     save(audio, "ia-response.mp3")
                     st.audio("ia-response.mp3", format="audio/mp3")
+
+st.audio("", format="audio/mp3")  # coupe l'audio actif
+
